@@ -8,6 +8,19 @@ import java.time.LocalDateTime;
                 @NamedQuery(
                         name = "findAllStudentByName",
                         query = "from StudentEntity s where s.name = :name"
+                ),
+                @NamedQuery(
+                        name = "findStudentById",
+                        query = "from StudentEntity s where s.id = :id"
+                )
+        }
+)
+@NamedNativeQueries(
+        {
+                @NamedNativeQuery(
+                        name = "findAllStudentByNameNativeQuery",
+                        query = "select * from student s where s.name = :name",
+                        resultClass = StudentEntity.class
                 )
         }
 )

@@ -15,7 +15,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 //        saveData();
-        namedQueryExample();
+//        namedQueryExample();
+        nativeNamedQueryExample();
     }
 
     public static void namedQueryExample() {
@@ -26,6 +27,26 @@ public class Main {
         Session session = factory.openSession();
 
         Query<StudentEntity> query = session.createNamedQuery("findAllStudentByName");
+        query.setParameter("name", "Ali");
+        List<StudentEntity> list = query.list();
+
+        for (StudentEntity student : list) {
+            System.out.println(student);
+        }
+
+        factory.close();
+        session.close();
+    }
+
+    public static void nativeNamedQueryExample() {
+        StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+        Metadata meta = new MetadataSources(ssr).getMetadataBuilder().build();
+
+        SessionFactory factory = meta.getSessionFactoryBuilder().build();
+        Session session = factory.openSession();
+
+        Query<StudentEntity> query = session.createNamedQuery("findAllStudentByNameNativeQuery");
+
         query.setParameter("name", "Ali");
         List<StudentEntity> list = query.list();
 
